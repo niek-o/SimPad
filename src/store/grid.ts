@@ -1,16 +1,21 @@
-import { defineStore } from "pinia";
-import { cellType }    from "../utils/types";
-import { getCC }       from "../utils/getNote";
-import { reactive }    from "vue";
-import { HSLColor }    from "./color";
+import { defineStore }        from "pinia";
+import { cellType, RGBColor } from "../utils/types";
+import { getCC }              from "../utils/getNote";
+import { reactive }           from "vue";
 
 export const useGridStore = defineStore("Grid", {
 	state:   (): { grid: cellType[][] } => ({
 		grid: reactive([])
 	}),
 	actions: {
-		setColor(cell: cellType, color: HSLColor) {
-			this.grid[cell.row][cell.col].HSLColor = color;
+		setColor(cell: cellType, color: RGBColor) {
+			this.grid[cell.row][cell.col].RGB = color;
+		},
+		setColorByCC(cc: number, color: RGBColor) {
+			const index1 = this.grid.findIndex(row => row.find(cell => cell.cc === cc));
+			const index2 = this.grid[index1].findIndex(cell => cell.cc === cc);
+			
+			this.grid[index1][index2].RGB = color;
 		},
 		init() {
 			this.grid = [];
@@ -23,7 +28,7 @@ export const useGridStore = defineStore("Grid", {
 						row:      row,
 						col:      col,
 						cc:       getCC(row, col),
-						HSLColor: {
+						RGB: {
 							r: 0,
 							g: 0,
 							b: 0,

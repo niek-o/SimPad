@@ -1,10 +1,15 @@
-import { HSLColor } from "../store/color";
-
 export interface cellType extends MIDINotes {
 	row: number;
 	col: number;
-	HSLColor: HSLColor;
+	RGB: RGBColor;
 }
+
+export interface RGBColor {
+	r: number,
+	g: number,
+	b: number,
+}
+
 
 export interface MIDINotes {
 	cc: number;

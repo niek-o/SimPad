@@ -4,13 +4,13 @@
       <div class="flex flex-col gap-4">
         <!--Top circle buttons-->
         <div class="flex flex-row gap-4 justify-center">
-          <RoundTile v-for="rows in grid" />
+          <RoundTile v-for="() in grid" />
         </div>
 
         <div class="flex gap-4 justify-center">
           <!--Left circle buttons-->
           <div class="flex flex-col gap-4">
-            <RoundTile v-for="rows in grid" />
+            <RoundTile v-for="() in grid" />
           </div>
 
           <!--Main grid-->
@@ -24,12 +24,12 @@
 
           <!--Right circle buttons-->
           <div class="flex flex-col gap-4">
-            <RoundTile v-for="rows in grid" />
+            <RoundTile v-for="() in grid" />
           </div>
         </div>
         <!--Bottom circle buttons-->
         <div class="flex flex-row gap-4 justify-center">
-          <RoundTile v-for="rows in grid" />
+          <RoundTile v-for="() in grid" />
         </div>
       </div>
     </div>
@@ -53,13 +53,13 @@ const webMIDI = new WebMIDI();
 
 function click(cell: cellType) {
   gridStore.setColor(cell, {
-    r:         colorStore.r,
-    g:         colorStore.g,
+    r: colorStore.r,
+    g: colorStore.g,
     b: colorStore.b
   });
   webMIDI.changeColor({
-    r:         colorStore.r,
-    g:         colorStore.g,
+    r: colorStore.r,
+    g: colorStore.g,
     b: colorStore.b
   }, cell.cc);
 }

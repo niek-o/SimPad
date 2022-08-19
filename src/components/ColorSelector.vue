@@ -11,28 +11,28 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useColorStore }            from "../store/color";
-import { generateHSL }   from "../utils/generateHSL";
-import { hslToRgb }      from "../utils/convertHSLToRGB";
+import { generateHSL }              from "../utils/generateHSL";
+import { hslToRgb }                 from "../utils/convertHSLToRGB";
 
 const colorStore = useColorStore();
 
-const HSLColor = ref(0);
+const HSLColor      = ref(0);
 const HSLSaturation = ref(100);
-const HSLLightness = ref(50);
+const HSLLightness  = ref(50);
 
 const selectedColor = computed(() => generateHSL(HSLColor.value, HSLSaturation.value, HSLLightness.value));
 
 function run() {
-  const { r, g, b } = hslToRgb(HSLColor.value, HSLSaturation.value / 100, HSLLightness.value / 100)
+  const { r, g, b } = hslToRgb(HSLColor.value, HSLSaturation.value / 100, HSLLightness.value / 100);
 
-  colorStore.r = r
-  colorStore.g = g
-  colorStore.b = b
+  colorStore.r = r;
+  colorStore.g = g;
+  colorStore.b = b;
 }
 
 onMounted(() => {
-  run()
-})
+  run();
+});
 </script>
 
 <style scoped>
@@ -45,17 +45,17 @@ onMounted(() => {
 }
 
 .hue-slider::-webkit-slider-thumb {
-  appearance:         none;
-  margin-top:         -5px;
-  width:              10px;
-  height:             20px;
-  background:         var(--white);
-  cursor:             pointer;
+  appearance: none;
+  margin-top: -5px;
+  width:      10px;
+  height:     20px;
+  background: var(--white);
+  cursor:     pointer;
 }
 
 .hue-slider::-webkit-slider-runnable-track {
-  background:         linear-gradient(to right, #FF0000 0%, #FFFF00 17%, #00FF00 33%, #00FFFF 50%, #0000FF 67%, #FF00FF 83%, #FF0000 100%);
-  height: 10px;
+  background: linear-gradient(to right, #FF0000 0%, #FFFF00 17%, #00FF00 33%, #00FFFF 50%, #0000FF 67%, #FF00FF 83%, #FF0000 100%);
+  height:     10px;
 }
 
 .saturation-slider {
@@ -63,17 +63,17 @@ onMounted(() => {
 }
 
 .saturation-slider::-webkit-slider-thumb {
-  appearance:         none;
-  margin-top:         -5px;
-  width:              10px;
-  height:             20px;
-  background:         var(--white);
-  cursor:             pointer;
+  appearance: none;
+  margin-top: -5px;
+  width:      10px;
+  height:     20px;
+  background: var(--white);
+  cursor:     pointer;
 }
 
 .saturation-slider::-webkit-slider-runnable-track {
-  background:         linear-gradient(to right, #FFFFFF 0%, v-bind(selectedColor) 100% );
-  height: 10px;
+  background: linear-gradient(to right, #FFFFFF 0%, v-bind(selectedColor) 100%);
+  height:     10px;
 }
 
 .lightness-slider {
@@ -81,16 +81,16 @@ onMounted(() => {
 }
 
 .lightness-slider::-webkit-slider-thumb {
-  appearance:         none;
-  margin-top:         -5px;
-  width:              10px;
-  height:             20px;
-  background:         var(--white);
-  cursor:             pointer;
+  appearance: none;
+  margin-top: -5px;
+  width:      10px;
+  height:     20px;
+  background: var(--white);
+  cursor:     pointer;
 }
 
 .lightness-slider::-webkit-slider-runnable-track {
-  background:         linear-gradient(to right, #000000 0%, v-bind(selectedColor) 50%, #FFFFFF 100%);
-  height: 10px;
+  background: linear-gradient(to right, #000000 0%, v-bind(selectedColor) 50%, #FFFFFF 100%);
+  height:     10px;
 }
 </style>

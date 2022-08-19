@@ -1,5 +1,5 @@
 <template>
-  <div @click="click">
+  <div>
     <div v-if="!corner.middleSquare" class="tile h-14 w-14 bg-launchpadTile rounded-sm" />
     <div v-if="corner.leftTop" class="tile h-14 w-14 bg-launchpadTile rounded-sm rounded-br-xl" />
     <div v-if="corner.rightTop" class="tile h-14 w-14 bg-launchpadTile rounded-sm rounded-bl-xl" />
@@ -10,15 +10,13 @@
 
 <script setup lang="ts">
 import { cellType }    from "../utils/types";
-import { generateHSL } from "../utils/generateHSL";
 import { computed }    from "vue";
-import { hslToRgb }    from "../utils/convertHSLToRGB";
 
 const props = defineProps<{
   cell: cellType;
 }>();
 
-const HSLColor = computed(() => props.cell.HSLColor);
+const HSLColor = computed(() => props.cell.RGB);
 
 const corner = {
   middleSquare: (props.cell.row === 3 && props.cell.col === 3)

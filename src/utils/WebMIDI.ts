@@ -1,15 +1,13 @@
 import { WebMidi }       from "webmidi";
-import { hslToRgb }      from "./convertHSLToRGB";
 import { Input, Output } from "webmidi";
-import { useGridStore }            from "../store/grid";
-import { HSLColor, useColorStore } from "../store/color";
+import { useGridStore }  from "../store/grid";
+import { RGBColor }      from "./types";
 
 export class WebMIDI {
-	private webmidi = WebMidi;
+	private webmidi    = WebMidi;
 	declare private mySynth: Input;
 	declare private output: Output;
-	private grid    = useGridStore().grid;
-	private colorStore = useColorStore();
+	private gridStore  = useGridStore();
 	
 	constructor() {
 		this.webmidi.enable({ sysex: true })
@@ -21,17 +19,17 @@ export class WebMIDI {
 				this.mySynth = WebMidi.getInputByName("MIDIIN2 (3- Launchpad Pro)");
 				this.output  = WebMidi.getOutputByName("MIDIOUT2 (3- Launchpad Pro)");
 			
-				this.grid.forEach((row) => {
+				this.gridStore.grid.forEach((row) => {
 					row.forEach(cell => {
-						this.changeColor(cell.HSLColor, cell.cc);
+						this.changeColor(cell.RGB, cell.cc);
 					});
 				});
 			
-				this.mySynth.channels[1].addListener("noteon", e => {
-					const ccValue = e.message.dataBytes[0];
-					
-					// const index1 = this.grid.findIndex(row => row.find(cell => cell.cc === ccValue));
-					// const index2 = this.grid[index1].findIndex(cell => cell.cc === ccValue);
+				this.mySynth.channels[1].addListener("noteon", () => {
+					// const ccValue = e.message.dataBytes[0];
+				
+					// const index1 = this.gridStore.findIndex(row => row.find(cell => cell.cc === ccValue));
+					// const index2 = this.gridStore[index1].findIndex(cell => cell.cc === ccValue);
 					//
 					// this.changeColor(this.colorStore, ccValue);
 				});
@@ -39,7 +37,9 @@ export class WebMIDI {
 			.catch(err => alert(err));
 	}
 	
-	changeColor(HSL: HSLColor, cc: number) {
+	changeColor(RGB: RGBColor, cc: number) {
+		this.gridStore.setColorByCC(cc, RGB);
+		
 		this.output.sendSysex(0x00, [
 			32,
 			41,
@@ -47,9 +47,9 @@ export class WebMIDI {
 			16,
 			11,
 			cc,
-			Math.floor(HSL.r / 2),
-			Math.floor(HSL.g / 2),
-			Math.floor(HSL.b / 2),
+			Math.floor(RGB.r / 2),
+			Math.floor(RGB.g / 2),
+			Math.floor(RGB.b / 2),
 		]);
 	}
 }
