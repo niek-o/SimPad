@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--black:         #000000;
+	--white:         #FFFFFF;
+	--launchpadBase: #17181E;
+	--launchpadTile: #F7FBFC;
+}
+
+.non-drag {
+	-webkit-user-select: none;
+	-webkit-user-drag:   none;
+	-webkit-app-region:  no-drag;
+	cursor:              default;
+}
