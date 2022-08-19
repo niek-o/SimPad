@@ -47,9 +47,9 @@ export class WebMIDI {
 			16,
 			11,
 			cc,
-			Math.floor(RGB.r / 2),
-			Math.floor(RGB.g / 2),
-			Math.floor(RGB.b / 2),
+			Math.floor(RGB.r / 4),
+			Math.floor(RGB.g / 4),
+			Math.floor(RGB.b / 4),
 		]);
 	}
 }
