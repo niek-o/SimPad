@@ -52,11 +52,6 @@ const grid    = gridStore.grid;
 const webMIDI = new WebMIDI();
 
 function click(cell: cellType) {
-  gridStore.setColor(cell, {
-    r: colorStore.r,
-    g: colorStore.g,
-    b: colorStore.b
-  });
   webMIDI.changeColor({
     r: colorStore.r,
     g: colorStore.g,
