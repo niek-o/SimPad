@@ -12,7 +12,7 @@
 import { computed, onMounted, ref } from "vue";
 import { useColorStore }            from "../store/color";
 import { generateHSL }              from "../utils/generateHSL";
-import { hslToRgb }                 from "../utils/convertHSLToRGB";
+import { HSLToRGB }                 from "../utils/convertHSLToRGB";
 
 const colorStore = useColorStore();
 
@@ -23,7 +23,7 @@ const HSLLightness  = ref(50);
 const selectedColor = computed(() => generateHSL(HSLColor.value, HSLSaturation.value, HSLLightness.value));
 
 function run() {
-  const { r, g, b } = hslToRgb(HSLColor.value, HSLSaturation.value / 100, HSLLightness.value / 100);
+  const { r, g, b } = HSLToRGB(HSLColor.value, HSLSaturation.value / 100, HSLLightness.value / 100);
 
   colorStore.r = r;
   colorStore.g = g;

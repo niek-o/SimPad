@@ -4,10 +4,10 @@ import { useGridStore }  from "../store/grid";
 import { RGBColor }      from "./types";
 
 export class WebMIDI {
-	private webmidi    = WebMidi;
-	declare private mySynth: Input;
+	private webmidi   = WebMidi;
+	declare private input: Input;
 	declare private output: Output;
-	private gridStore  = useGridStore();
+	private gridStore = useGridStore();
 	
 	constructor() {
 		this.webmidi.enable({ sysex: true })
@@ -16,8 +16,8 @@ export class WebMIDI {
 					document.body.innerHTML += "No device detected.";
 				}
 			
-				this.mySynth = WebMidi.getInputByName("MIDIIN2 (3- Launchpad Pro)");
-				this.output  = WebMidi.getOutputByName("MIDIOUT2 (3- Launchpad Pro)");
+				this.input  = WebMidi.getInputByName("MIDIIN2 (3- Launchpad Pro)");
+				this.output = WebMidi.getOutputByName("MIDIOUT2 (3- Launchpad Pro)");
 			
 				this.gridStore.grid.forEach((row) => {
 					row.forEach(cell => {
@@ -25,7 +25,27 @@ export class WebMIDI {
 					});
 				});
 			
-				this.mySynth.channels[1].addListener("noteon", () => {
+				// Switch to standalone mode
+				this.output.sendSysex(0x00, [
+					32,
+					41,
+					2,
+					16,
+					33,
+					0x01
+				]);
+			
+				// Switch to programmer mode
+				this.output.sendSysex(0x00, [
+					32,
+					41,
+					2,
+					16,
+					44,
+					0x03
+				]);
+			
+				this.input.channels[1].addListener("noteon", () => {
 					// const ccValue = e.message.dataBytes[0];
 				
 					// const index1 = this.gridStore.findIndex(row => row.find(cell => cell.cc === ccValue));

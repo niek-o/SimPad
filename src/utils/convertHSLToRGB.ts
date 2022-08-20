@@ -1,36 +1,52 @@
-export function hslToRgb(hue: number, saturation: number, lightness: number) {
-	let t1,
-		t2,
-		r,
-		g,
-		b;
-	hue = hue / 60;
-	if (lightness <= 0.5) {
-		t2 = lightness * (saturation + 1);
+/**
+ * Converts a HSL color to RGB color
+ * {@link https://css-tricks.com/converting-color-spaces-in-javascript/}
+ *
+ * @param hue
+ * @param saturation
+ * @param lightness
+ */
+export function HSLToRGB(hue: number, saturation: number, lightness: number) {
+	let c = (1 - Math.abs(2 * lightness - 1)) * saturation,
+		x = c * (1 - Math.abs((hue / 60) % 2 - 1)),
+		m = lightness - c / 2,
+		r = 0,
+		g = 0,
+		b = 0;
+	
+	if (0 <= hue && hue < 60) {
+		r = c;
+		g = x;
+		b = 0;
 	}
-	else {
-		t2 = lightness + saturation - (lightness * saturation);
+	else if (60 <= hue && hue < 120) {
+		r = x;
+		g = c;
+		b = 0;
 	}
-	t1 = lightness * 2 - t2;
-	r  = hueToRgb(t1, t2, hue + 2) * 255;
-	g  = hueToRgb(t1, t2, hue) * 255;
-	b  = hueToRgb(t1, t2, hue - 2) * 255;
-	return { r: r, g: g, b: b };
-}
-
-function hueToRgb(t1: number, t2: number, hue: number) {
-	if (hue < 0) hue += 6;
-	if (hue >= 6) hue -= 6;
-	if (hue < 1) {
-		return (t2 - t1) * hue + t1;
+	else if (120 <= hue && hue < 180) {
+		r = 0;
+		g = c;
+		b = x;
 	}
-	else if (hue < 3) {
-		return t2;
+	else if (180 <= hue && hue < 240) {
+		r = 0;
+		g = x;
+		b = c;
 	}
-	else if (hue < 4) {
-		return (t2 - t1) * (4 - hue) + t1;
+	else if (240 <= hue && hue < 300) {
+		r = x;
+		g = 0;
+		b = c;
 	}
-	else {
-		return t1;
+	else if (300 <= hue && hue < 360) {
+		r = c;
+		g = 0;
+		b = x;
 	}
+	r = Math.round((r + m) * 255);
+	g = Math.round((g + m) * 255);
+	b = Math.round((b + m) * 255);
+	
+	return { r, g, b };
 }
