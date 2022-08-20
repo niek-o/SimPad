@@ -42,7 +42,7 @@ import RoundTile             from "./RoundTile.vue";
 import { useGridStore }      from "../store/grid";
 import { cellType }          from "../utils/types";
 import { useColorStore }     from "../store/color";
-import { useLaunchpadStore } from "../store/Launchpad";
+import { useLaunchpadStore } from "../store/launchpad";
 
 const gridStore      = useGridStore();
 const colorStore     = useColorStore();
@@ -53,7 +53,7 @@ gridStore.init();
 const grid = gridStore.grid;
 
 function click(cell: cellType) {
-  launchpadStore.changeColor({
+  launchpadStore.launchpad.changeColor({
     r: colorStore.r,
     g: colorStore.g,
     b: colorStore.b
