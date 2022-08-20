@@ -37,22 +37,23 @@
 </template>
 
 <script setup lang="ts">
-import SquareTile        from "./SquareTile.vue";
-import RoundTile         from "./RoundTile.vue";
-import { useGridStore }  from "../store/grid";
-import { WebMIDI }       from "../utils/WebMIDI";
-import { cellType }      from "../utils/types";
-import { useColorStore } from "../store/color";
+import SquareTile            from "./SquareTile.vue";
+import RoundTile             from "./RoundTile.vue";
+import { useGridStore }      from "../store/grid";
+import { cellType }          from "../utils/types";
+import { useColorStore }     from "../store/color";
+import { useLaunchpadStore } from "../store/Launchpad";
 
-const gridStore  = useGridStore();
-const colorStore = useColorStore();
+const gridStore      = useGridStore();
+const colorStore     = useColorStore();
+const launchpadStore = useLaunchpadStore();
+
 gridStore.init();
 
-const grid    = gridStore.grid;
-const webMIDI = new WebMIDI();
+const grid = gridStore.grid;
 
 function click(cell: cellType) {
-  webMIDI.changeColor({
+  launchpadStore.changeColor({
     r: colorStore.r,
     g: colorStore.g,
     b: colorStore.b

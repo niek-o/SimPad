@@ -1,12 +1,16 @@
+import { RGBColor } from "./types";
+
 /**
- * Converts a HSL color to RGB color
+ * Converts an HSL color to RGB color
  * {@link https://css-tricks.com/converting-color-spaces-in-javascript/}
  *
  * @param hue
  * @param saturation
  * @param lightness
+ *
+ * @returns The RGB color
  */
-export function HSLToRGB(hue: number, saturation: number, lightness: number) {
+export function HSLToRGB(hue: number, saturation: number, lightness: number): RGBColor {
 	let c = (1 - Math.abs(2 * lightness - 1)) * saturation,
 		x = c * (1 - Math.abs((hue / 60) % 2 - 1)),
 		m = lightness - c / 2,

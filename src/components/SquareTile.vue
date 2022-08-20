@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { cellType }    from "../utils/types";
-import { computed }    from "vue";
+import { cellType } from "../utils/types";
+import { computed } from "vue";
 
 const props = defineProps<{
   cell: cellType;

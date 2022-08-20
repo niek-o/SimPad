@@ -25,9 +25,9 @@ export const useGridStore = defineStore("Grid", {
 				
 				for (let col = 0; col < 8; col++) {
 					cells.push({
-						row:      row,
-						col:      col,
-						cc:       getCC(row, col),
+						row: row,
+						col: col,
+						cc:  getCC(row, col),
 						RGB: {
 							r: 0,
 							g: 0,

@@ -3,30 +3,32 @@ import { Input, Output } from "webmidi";
 import { useGridStore }  from "../store/grid";
 import { RGBColor }      from "./types";
 
-export class WebMIDI {
-	private webmidi   = WebMidi;
-	declare private input: Input;
-	declare private output: Output;
-	private gridStore = useGridStore();
+export class LaunchpadDevice {
+	public readonly Launchpad = WebMidi;
+	
+	declare private _input: Input;
+	declare private _output: Output;
+	
+	private _gridStore = useGridStore();
 	
 	constructor() {
-		this.webmidi.enable({ sysex: true })
+		this.Launchpad.enable({ sysex: true })
 			.then(() => {
 				if (WebMidi.inputs.length < 1) {
 					document.body.innerHTML += "No device detected.";
 				}
 			
-				this.input  = WebMidi.getInputByName("MIDIIN2 (3- Launchpad Pro)");
-				this.output = WebMidi.getOutputByName("MIDIOUT2 (3- Launchpad Pro)");
+				this._input  = WebMidi.getInputByName("MIDIIN2 (3- Launchpad Pro)");
+				this._output = WebMidi.getOutputByName("MIDIOUT2 (3- Launchpad Pro)");
 			
-				this.gridStore.grid.forEach((row) => {
+				this._gridStore.grid.forEach((row) => {
 					row.forEach(cell => {
 						this.changeColor(cell.RGB, cell.cc);
 					});
 				});
 			
 				// Switch to standalone mode
-				this.output.sendSysex(0x00, [
+				this._output.sendSysex(0x00, [
 					32,
 					41,
 					2,
@@ -36,7 +38,7 @@ export class WebMIDI {
 				]);
 			
 				// Switch to programmer mode
-				this.output.sendSysex(0x00, [
+				this._output.sendSysex(0x00, [
 					32,
 					41,
 					2,
@@ -45,11 +47,11 @@ export class WebMIDI {
 					0x03
 				]);
 			
-				this.input.channels[1].addListener("noteon", () => {
+				this._input.channels[1].addListener("noteon", () => {
 					// const ccValue = e.message.dataBytes[0];
 				
-					// const index1 = this.gridStore.findIndex(row => row.find(cell => cell.cc === ccValue));
-					// const index2 = this.gridStore[index1].findIndex(cell => cell.cc === ccValue);
+					// const index1 = this._gridStore.findIndex(row => row.find(cell => cell.cc === ccValue));
+					// const index2 = this._gridStore[index1].findIndex(cell => cell.cc === ccValue);
 					//
 					// this.changeColor(this.colorStore, ccValue);
 				});
@@ -58,9 +60,9 @@ export class WebMIDI {
 	}
 	
 	changeColor(RGB: RGBColor, cc: number) {
-		this.gridStore.setColorByCC(cc, RGB);
+		this._gridStore.setColorByCC(cc, RGB);
 		
-		this.output.sendSysex(0x00, [
+		this._output.sendSysex(0x00, [
 			32,
 			41,
 			2,
