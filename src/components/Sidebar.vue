@@ -1,5 +1,5 @@
 <template>
-  <div class="w-64 h-screen bg-black absolute">
+  <div class="w-64 h-screen bg-launchpadBase absolute drop-shadow-lg">
     <ColorSelector />
   </div>
 </template>

@@ -1,8 +1,7 @@
 <template>
-  <div class="w-64 h-64 flex flex-col gap-4 bg-launchpadBase p-2">
-    <div class="picked-color w-full h-full"></div>
-
-    <input v-model="HSLColor" class="mt-5 hue-slider w-full" type="range" min="0" max="360" @change="run()">
+  <div class="w-64 h-64 flex flex-col gap-4 p-2">
+    <div class="picked-color w-full h-full rounded-md"></div>
+    <input v-model="HSLColor" class="mt-5 hue-slider w-full" type="range" min="0" max="359" @change="run()">
     <input v-model="HSLSaturation" class="mt-5 saturation-slider w-full" type="range" min="0" max="100" @change="run()">
     <input v-model="HSLLightness" class="mt-5 lightness-slider w-full" type="range" min="0" max="100" @change="run()">
   </div>

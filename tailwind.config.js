@@ -4,6 +4,7 @@ module.exports = {
     theme: {
         colors: {
             "black": "var(--black)",
+            "background": "var(--background)",
             "white": "var(--white)",
             "launchpadBase": "var(--launchpadBase)",
             "launchpadTile": "var(--launchpadTile)",
